@@ -44,7 +44,7 @@ export default ProductCreate
 //         }
 //     }
 //     createProduct(data){
-//       const endpoint = '/api/posts/'
+//       const endpoint = '/api/products/'
 //       const csrfToken = cookie.load('csrftoken')
 //       let thisComp = this
 //       if (csrfToken !== undefined) {

@@ -22,7 +22,7 @@ class ProductDetail extends Component {
         })
     }
     loadProduct(slug){
-      const endpoint = `/api/posts/${slug}/`
+      const endpoint = `/api/products/${slug}/`
       let thisComp = this
       let lookupOptions = {
           method: "GET",
@@ -85,12 +85,12 @@ class ProductDetail extends Component {
 
                 <p className='lead'>
                 <Link maintainScrollPosition={false} to={{
-                    pathname: `/posts`,
+                    pathname: `/products`,
                     state: { fromDashboard: false }
                   }}>Products</Link>
 
                   {post.owner === true ? <Link maintainScrollPosition={false} to={{
-                    pathname: `/posts/create/`,
+                    pathname: `/products`,
                     state: { fromDashboard: false }
                   }}>Create Product</Link> : "" }
                </p>

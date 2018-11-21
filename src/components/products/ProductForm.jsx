@@ -22,7 +22,7 @@ class ProductForm extends Component {
     }
 
     createProduct(data){
-      const endpoint = '/api/posts/'
+      const endpoint = '/api/products/'
       const csrfToken = cookie.load('csrftoken')
       let thisComp = this
       if (csrfToken !== undefined) {
@@ -55,7 +55,7 @@ class ProductForm extends Component {
 
     updateProduct(data){
       const {post} = this.props
-      const endpoint = `/api/posts/${post.slug}/`
+      const endpoint = `/api/products/${post.slug}/`
       const csrfToken = cookie.load('csrftoken')
       let thisComp = this
       if (csrfToken !== undefined) {

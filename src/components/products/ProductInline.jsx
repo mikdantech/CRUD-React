@@ -10,7 +10,7 @@ class ProductInline extends Component {
       <div>
           {post !== undefined ? <div className={elClass}>
                <h1><Link maintainScrollPosition={false} to={{
-                   pathname:`/posts/${post.slug}`,
+                   pathname:`/products/${post.slug}`,
                    state: {fromDashboard: false}
                }}>{post.title}</Link></h1>
 

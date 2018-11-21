@@ -12,11 +12,10 @@ class Products extends Component {
         this.handleNewProduct = this.handleNewProduct.bind(this)
         this.loadMoreProducts =this.loadMoreProducts.bind(this)
         this.state = {
-            posts: [],
-            postsListClass: "card",
+            products: [],
+            productsListClass: "card",
             next: null,
             previous: null,
-            author: false,
             count: 0
         }
     }
@@ -30,7 +29,7 @@ class Products extends Component {
     }
 
   loadProducts(nextEndpoint){
-      let endpoint = '/api/posts/'
+      let endpoint = 'http://localhost:3001/products'
       if (nextEndpoint !== undefined) {
           endpoint = nextEndpoint
       }
@@ -51,14 +50,13 @@ class Products extends Component {
       .then(function(response){
           return response.json()
       }).then(function(responseData){
-          console.log(responseData)
            thisComp.setState({
-                  posts: thisComp.state.posts.concat(responseData.results),
+                  products: responseData,
                   next: responseData.next,
                   previous: responseData.previous,
-                  author: responseData.author,
                   count: responseData.count
-              })
+              });
+              console.log(responseData)
       }).catch(function(error){
           console.log("error", error)
       })
@@ -66,10 +64,10 @@ class Products extends Component {
 
   handleNewProduct(postItemData){
       // console.log(postItemData)
-      let currentProducts = this.state.posts
+      let currentProducts = this.state.products
       currentProducts.unshift(postItemData) // unshift
       this.setState({
-          posts: currentProducts
+          products: currentProducts
       })
   }
 
@@ -77,46 +75,45 @@ class Products extends Component {
 
   toggleProductListClass(event){
       event.preventDefault()
-      let currentListClass = this.state.postsListClass
+      let currentListClass = this.state.productsListClass
       if (currentListClass === ""){
           this.setState({
-              postsListClass: "card",
+              productsListClass: "card",
           })
       } else {
           this.setState({
-              postsListClass: "",
+              productsListClass: "",
           })
       }
 
   }
 
   componentDidMount(){
-      this.setState({
-          posts: [],
-          postsListClass: "card",
-          next: null,
-          previous: null,
-          author: false,
-          count: 0
-      })
+      // this.setState({
+      //     products: [],
+      //     productsListClass: "card",
+      //     next: null,
+      //     previous: null,
+      //     count: 0
+      // })
       this.loadProducts()
   }
   render() {
-      const {posts} = this.state
-      const {postsListClass} = this.state
-      const {author} = this.state
+      const {products} = this.state
+      console.log(products)
+      const {productsListClass} = this.state
       const {next} = this.state
     return (
       <div>
-          {author === true ? <Link className='mr-2' maintainScrollPosition={false} to={{
-                    pathname: `/posts/create/`,
-                    state: { fromDashboard: false }
-                  }}>Create Product</Link> : ""}
-
+        <Link className='mr-2' maintainScrollPosition={false} to={{
+                  pathname: '/products',
+                  state: { fromDashboard: false }
+                }}>Create Product</Link>
+              <br />
           <button onClick={this.toggleProductListClass}>Toggle Class</button>
-          {posts.length > 0 ? posts.map((postItem, index)=>{
+          {products.length > 0 ? products.map((postItem, index)=>{
               return (
-                      <ProductInline post={postItem} elClass={postsListClass} />
+                      <ProductInline post={postItem} elClass={productsListClass} />
               )
           }) : <p>No Products Found</p>}
           {next !== null ? <button onClick={this.loadMoreProducts}>Load more</button> : ''}
