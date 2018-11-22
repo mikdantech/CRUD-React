@@ -7,10 +7,10 @@ import ProductForm from './ProductForm'
 
 class ProductDetail extends Component {
     constructor(props){
-        super(props)
-        this.handleProductItemUpdated= this.handleProductItemUpdated.bind(this)
+        super(props);
+        this.handleProductItemUpdated= this.handleProductItemUpdated.bind(this);
         this.state = {
-             slug: null,
+             id: null,
              post: null,
              doneLoading: false,
         }
@@ -21,25 +21,25 @@ class ProductDetail extends Component {
             post: postItemData
         })
     }
-    loadProduct(slug){
-      const endpoint = `/api/products/${slug}/`
-      let thisComp = this
+    loadProduct(id){
+      const endpoint = `http://www.node.mikdantech.com/products/${id}/`;
+      let thisComp = this;
       let lookupOptions = {
           method: "GET",
           headers: {
               'Content-Type': 'application/json'
           }
-      }
+      };
 
-      const csrfToken = cookie.load('csrftoken')
+      const csrfToken = cookie.load('csrftoken');
       if (csrfToken !== undefined) {
-          lookupOptions['credentials'] = 'include'
-          lookupOptions['headers']['X-CSRFToken'] = csrfToken
+          lookupOptions['credentials'] = 'include';
+          lookupOptions['headers']['X-CSRFToken'] = csrfToken;
        }
 
       fetch(endpoint, lookupOptions)
       .then(function(response){
-          if (response.status == 404){
+          if (response.status === 404){
               console.log('Page not found')
           }
           return response.json()
@@ -61,27 +61,28 @@ class ProductDetail extends Component {
   }
     componentDidMount(){
         this.setState({
-                slug: null,
+                id: null,
                 post: null
-            })
+            });
         if (this.props.match){
-            const {slug} = this.props.match.params
+            const {id} = this.props.match.params;
             this.setState({
-                slug: slug,
+                id: id,
                 doneLoading: false
-            })
-            this.loadProduct(slug)
+            });
+            this.loadProduct(id)
         }
     }
     render(){
-        const {doneLoading} = this.state
-        const {post} = this.state
+        const {doneLoading} = this.state;
+        const {post} = this.state;
         return(
             <p>{(doneLoading === true) ? <div>
                 {post === null ? "Not Found":
                 <div>
                 <h1>{post.title}</h1>
-                {post.slug}
+                    {console.log(post)}
+                {post.id}
 
                 <p className='lead'>
                 <Link maintainscrollposition="false" to={{
@@ -90,7 +91,7 @@ class ProductDetail extends Component {
                   }}>Products</Link>
 
                   {post.owner === true ? <Link maintainscrollposition="false" to={{
-                    pathname: `/products`,
+                    pathname: `/products/create`,
                     state: { fromDashboard: false }
                   }}>Create Product</Link> : "" }
                </p>

@@ -104,7 +104,7 @@ class Products extends Component {
     return (
       <div>
         <Link className='mr-2' maintainscrollposition="false" to={{
-                  pathname: '/products',
+                  pathname: '/products/create',
                   state: { fromDashboard: false }
                 }}>Create Product</Link>
               <br />
