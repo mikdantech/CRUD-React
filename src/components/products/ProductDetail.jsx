@@ -84,12 +84,12 @@ class ProductDetail extends Component {
                 {post.slug}
 
                 <p className='lead'>
-                <Link maintainScrollPosition={false} to={{
+                <Link maintainscrollposition="false" to={{
                     pathname: `/products`,
                     state: { fromDashboard: false }
                   }}>Products</Link>
 
-                  {post.owner === true ? <Link maintainScrollPosition={false} to={{
+                  {post.owner === true ? <Link maintainscrollposition="false" to={{
                     pathname: `/products`,
                     state: { fromDashboard: false }
                   }}>Create Product</Link> : "" }

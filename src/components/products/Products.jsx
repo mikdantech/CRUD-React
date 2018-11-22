@@ -7,10 +7,10 @@ import ProductInline from './ProductInline'
 class Products extends Component {
 
     constructor(props){
-        super(props)
-        this.toggleProductListClass = this.toggleProductListClass.bind(this)
-        this.handleNewProduct = this.handleNewProduct.bind(this)
-        this.loadMoreProducts =this.loadMoreProducts.bind(this)
+        super(props);
+        this.toggleProductListClass = this.toggleProductListClass.bind(this);
+        this.handleNewProduct = this.handleNewProduct.bind(this);
+        this.loadMoreProducts =this.loadMoreProducts.bind(this);
         this.state = {
             products: [],
             productsListClass: "card",
@@ -21,30 +21,30 @@ class Products extends Component {
     }
 
     loadMoreProducts(){
-        const {next} = this.state
+        const {next} = this.state;
         if (next !== null || next !== undefined) {
              this.loadProducts(next)
         }
-
     }
 
   loadProducts(nextEndpoint){
-      let endpoint = 'http://localhost:3001/products'
+      let endpoint = "http://www.node.mikdantech.com/products";
       if (nextEndpoint !== undefined) {
           endpoint = nextEndpoint
       }
-      let thisComp = this
+      let thisComp = this;
       let lookupOptions = {
           method: "GET",
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
           }
-      }
-      const csrfToken = cookie.load('csrftoken')
+      };
+      const csrfToken = cookie.load('csrftoken');
       if (csrfToken !== undefined) {
-          lookupOptions['credentials'] = 'include'
+          lookupOptions['credentials'] = 'include';
           lookupOptions['headers']['X-CSRFToken'] = csrfToken
-       }
+      }
 
       fetch(endpoint, lookupOptions)
       .then(function(response){
@@ -56,7 +56,6 @@ class Products extends Component {
                   previous: responseData.previous,
                   count: responseData.count
               });
-              console.log(responseData)
       }).catch(function(error){
           console.log("error", error)
       })
@@ -64,8 +63,8 @@ class Products extends Component {
 
   handleNewProduct(postItemData){
       // console.log(postItemData)
-      let currentProducts = this.state.products
-      currentProducts.unshift(postItemData) // unshift
+      let currentProducts = this.state.products;
+      currentProducts.unshift(postItemData); // unshift
       this.setState({
           products: currentProducts
       })
@@ -74,8 +73,8 @@ class Products extends Component {
 
 
   toggleProductListClass(event){
-      event.preventDefault()
-      let currentListClass = this.state.productsListClass
+      event.preventDefault();
+      let currentListClass = this.state.productsListClass;
       if (currentListClass === ""){
           this.setState({
               productsListClass: "card",
@@ -99,13 +98,12 @@ class Products extends Component {
       this.loadProducts()
   }
   render() {
-      const {products} = this.state
-      console.log(products)
-      const {productsListClass} = this.state
-      const {next} = this.state
+      const {products} = this.state;
+      const {productsListClass} = this.state;
+      const {next} = this.state;
     return (
       <div>
-        <Link className='mr-2' maintainScrollPosition={false} to={{
+        <Link className='mr-2' maintainscrollposition="false" to={{
                   pathname: '/products',
                   state: { fromDashboard: false }
                 }}>Create Product</Link>
@@ -113,7 +111,7 @@ class Products extends Component {
           <button onClick={this.toggleProductListClass}>Toggle Class</button>
           {products.length > 0 ? products.map((postItem, index)=>{
               return (
-                      <ProductInline post={postItem} elClass={productsListClass} />
+                      <ProductInline key={index} post={postItem} elClass={productsListClass} />
               )
           }) : <p>No Products Found</p>}
           {next !== null ? <button onClick={this.loadMoreProducts}>Load more</button> : ''}
