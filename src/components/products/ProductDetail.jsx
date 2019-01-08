@@ -22,7 +22,7 @@ class ProductDetail extends Component {
         })
     }
     loadProduct(id){
-      const endpoint = `http://www.node.mikdantech.com/products/${id}/`;
+      const endpoint = `https://db.mikdan.tech/api/v1/blogs/${id}/`;
       let thisComp = this;
       let lookupOptions = {
           method: "GET",

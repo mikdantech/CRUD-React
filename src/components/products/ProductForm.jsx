@@ -22,7 +22,7 @@ class ProductForm extends Component {
     }
 
     createProduct(data) {
-        const endpoint = 'http://www.node.mikdantech.com/products';
+        const endpoint = 'https://db.mikdan.tech/api/v1/blogs';
         const csrfToken = cookie.load('csrftoken');
         let thisComp = this;
         if (csrfToken !== undefined) {
@@ -55,7 +55,7 @@ class ProductForm extends Component {
 
     updateProduct(data) {
         const {post} = this.props;
-        const endpoint = `http://www.node.mikdantech.com/products/${post.id}`;
+        const endpoint = `https://db.mikdan.tech/api/v1/blogs/${post.id}`;
         const csrfToken = cookie.load('csrftoken');
         let thisComp = this;
         if (csrfToken !== undefined) {

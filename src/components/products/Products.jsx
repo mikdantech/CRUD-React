@@ -28,7 +28,7 @@ class Products extends Component {
     }
 
   loadProducts(nextEndpoint){
-      let endpoint = "http://www.node.mikdantech.com/products";
+      let endpoint = "https://db.mikdan.tech/api/v1/blogs";
       if (nextEndpoint !== undefined) {
           endpoint = nextEndpoint
       }
